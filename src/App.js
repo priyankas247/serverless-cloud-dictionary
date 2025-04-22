@@ -11,21 +11,32 @@ const App = () => {
 
   const handleSearch = () => {
     console.log('Fetching data from API...');
-    
-    // Construct the URL based on searchTerm
+
     const url = searchTerm
       ? `${apiUrl}/get-definition?term=${encodeURIComponent(searchTerm)}`
-      : `${apiUrl}/get-definition`; // Adjust for getting all terms if no searchTerm
+      : `${apiUrl}/get-definition`;
 
     axios
       .get(url)
       .then(response => {
         console.log('API Response:', response.data);
-        setTerms(response.data ? [response.data] : []);  // Assuming only one term returned
+        setTerms(response.data ? [response.data] : []);
         setFilteredTerms(response.data ? [response.data] : []);
       })
       .catch(error => {
-        console.error('Error fetching data:', error);
+        if (error.response && error.response.status === 404) {
+          console.warn('Term not found.');
+          setFilteredTerms([{
+            term: searchTerm,
+            definition: 'Definition not found in the dictionary.'
+          }]);
+        } else {
+          console.error('Error fetching data:', error);
+          setFilteredTerms([{
+            term: searchTerm,
+            definition: 'An error occurred while fetching data.'
+          }]);
+        }
       });
   };
 
@@ -39,7 +50,7 @@ const App = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button> {/* Add Search button */}
+        <button onClick={handleSearch}>Search</button>
       </header>
       <div className="dictionary-container">
         {filteredTerms.map((term) => (
