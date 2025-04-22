@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Fuse from 'fuse.js';
 import './App.css';
 
 const App = () => {
@@ -7,42 +8,42 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTerms, setFilteredTerms] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const apiUrl = 'https://j2bpwrmn74.execute-api.us-west-2.amazonaws.com/dev';
+  const apiUrl = 'https://j2bpwrmn74.execute-api.us-west-2.amazonaws.com/dev'; // Replace with your API Gateway URL
 
   const handleSearch = () => {
-    console.log('Fetching data from API...');
     setLoading(true);
-
-    const url = searchTerm
-      ? `${apiUrl}/get-definition?term=${encodeURIComponent(searchTerm)}`
-      : `${apiUrl}/get-definition`;
-
-    axios
-      .get(url)
+    setError('');
+    setFilteredTerms([]);
+    
+    // Call the API to fetch terms
+    axios.get(`${apiUrl}/get-definition?term=${searchTerm}`)
       .then(response => {
-        console.log('API Response:', response.data);
-        const result = response.data ? [response.data] : [];
-        setTerms(result);
-        setFilteredTerms(result);
-      })
-      .catch(error => {
-        if (error.response && error.response.status === 404) {
-          console.warn('Term not found.');
-          setFilteredTerms([{
-            term: searchTerm,
-            definition: 'Definition not found in the dictionary.'
-          }]);
+        const terms = response.data; // Assuming the response is an array of terms with their definitions
+
+        // Configure Fuse.js to search the term field
+        const fuse = new Fuse(terms, {
+          keys: ['term'],       // Search against the "term" key
+          threshold: 0.3,       // A lower value means more strict matching
+          includeScore: true,   // Include the search score for sorting results
+        });
+
+        // Perform fuzzy search
+        const results = fuse.search(searchTerm);
+
+        // If results are found, update filteredTerms with the best match
+        if (results.length > 0) {
+          const matchedTerms = results.map(result => result.item);  // Get the item (term object) from the result
+          setFilteredTerms(matchedTerms);
         } else {
-          console.error('Error fetching data:', error);
-          setFilteredTerms([{
-            term: searchTerm,
-            definition: 'An error occurred while fetching data.'
-          }]);
+          setError('No matching terms found.');
         }
       })
+      .catch(error => {
+        setError('An error occurred while fetching data.');
+      })
       .finally(() => {
-        setSearchTerm('');
         setLoading(false);
       });
   };
@@ -50,7 +51,7 @@ const App = () => {
   const handleClear = () => {
     setSearchTerm('');
     setFilteredTerms([]);
-    setTerms([]);
+    setError('');
   };
 
   return (
@@ -75,6 +76,8 @@ const App = () => {
             <div className="spinner"></div>
             <p>Fetching definition...</p>
           </div>
+        ) : error ? (
+          <p>{error}</p>
         ) : (
           filteredTerms.map((term) => (
             <div key={term.term} className="card">
