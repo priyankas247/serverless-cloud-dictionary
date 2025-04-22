@@ -4,43 +4,41 @@ import Fuse from 'fuse.js';
 import './App.css';
 
 const App = () => {
-  const [terms, setTerms] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTerms, setFilteredTerms] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const apiUrl = 'https://j2bpwrmn74.execute-api.us-west-2.amazonaws.com/dev'; // Replace with your API Gateway URL
+  const apiUrl = 'https://j2bpwrmn74.execute-api.us-west-2.amazonaws.com/dev'; // Your API Gateway URL
 
   const handleSearch = () => {
     setLoading(true);
     setError('');
     setFilteredTerms([]);
-    
-    // Call the API to fetch terms
-    axios.get(`${apiUrl}/term?term=${searchTerm}`)
-      .then(response => {
-        const terms = response.data; // Assuming the response is an array of terms with their definitions
 
-        // Configure Fuse.js to search the term field
+    // Fetch all terms from your backend
+    axios.get(`${apiUrl}/get-all-terms`)
+      .then(response => {
+        const terms = response.data;
+
+        // Set up Fuse.js for fuzzy search
         const fuse = new Fuse(terms, {
-          keys: ['term'],       // Search against the "term" key
-          threshold: 0.3,       // A lower value means more strict matching
-          includeScore: true,   // Include the search score for sorting results
+          keys: ['term'],
+          threshold: 0.3,
+          includeScore: true,
         });
 
-        // Perform fuzzy search
+        // Perform fuzzy search on the full dataset
         const results = fuse.search(searchTerm);
 
-        // If results are found, update filteredTerms with the best match
         if (results.length > 0) {
-          const matchedTerms = results.map(result => result.item);  // Get the item (term object) from the result
+          const matchedTerms = results.map(result => result.item);
           setFilteredTerms(matchedTerms);
         } else {
           setError('No matching terms found.');
         }
       })
-      .catch(error => {
+      .catch(() => {
         setError('An error occurred while fetching data.');
       })
       .finally(() => {
@@ -74,7 +72,7 @@ const App = () => {
         {loading ? (
           <div className="spinner-container">
             <div className="spinner"></div>
-            <p>Fetching definition...</p>
+            <p>Fetching definitions...</p>
           </div>
         ) : error ? (
           <p>{error}</p>
