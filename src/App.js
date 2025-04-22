@@ -18,7 +18,7 @@ const App = () => {
     setFilteredTerms([]);
     
     // Call the API to fetch terms
-    axios.get(`${apiUrl}/get-definition?term=${searchTerm}`)
+    axios.get(`${apiUrl}/term?term=${searchTerm}`)
       .then(response => {
         const terms = response.data; // Assuming the response is an array of terms with their definitions
 
