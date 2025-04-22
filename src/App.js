@@ -9,7 +9,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const apiUrl = 'https://j2bpwrmn74.execute-api.us-west-2.amazonaws.com/dev'; // Your API Gateway URL
+  const apiUrl = 'https://k9cvcqnuzg.execute-api.us-west-2.amazonaws.com/dev'; // Your API Gateway URL
 
   const handleSearch = () => {
     setLoading(true);
