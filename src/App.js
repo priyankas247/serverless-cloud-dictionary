@@ -6,11 +6,13 @@ const App = () => {
   const [terms, setTerms] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTerms, setFilteredTerms] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const apiUrl = 'https://j2bpwrmn74.execute-api.us-west-2.amazonaws.com/dev'; // Replace with your API Gateway URL
+  const apiUrl = 'https://j2bpwrmn74.execute-api.us-west-2.amazonaws.com/dev';
 
   const handleSearch = () => {
     console.log('Fetching data from API...');
+    setLoading(true);
 
     const url = searchTerm
       ? `${apiUrl}/get-definition?term=${encodeURIComponent(searchTerm)}`
@@ -20,8 +22,9 @@ const App = () => {
       .get(url)
       .then(response => {
         console.log('API Response:', response.data);
-        setTerms(response.data ? [response.data] : []);
-        setFilteredTerms(response.data ? [response.data] : []);
+        const result = response.data ? [response.data] : [];
+        setTerms(result);
+        setFilteredTerms(result);
       })
       .catch(error => {
         if (error.response && error.response.status === 404) {
@@ -37,7 +40,17 @@ const App = () => {
             definition: 'An error occurred while fetching data.'
           }]);
         }
+      })
+      .finally(() => {
+        setSearchTerm('');
+        setLoading(false);
       });
+  };
+
+  const handleClear = () => {
+    setSearchTerm('');
+    setFilteredTerms([]);
+    setTerms([]);
   };
 
   return (
@@ -50,15 +63,26 @@ const App = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button>
+        <div style={{ marginTop: '10px' }}>
+          <button onClick={handleSearch} disabled={loading}>Search</button>
+          <button onClick={handleClear} style={{ marginLeft: '10px' }}>Clear</button>
+        </div>
       </header>
+
       <div className="dictionary-container">
-        {filteredTerms.map((term) => (
-          <div key={term.term} className="card">
-            <h3>{term.term}</h3>
-            <p>{term.definition}</p>
+        {loading ? (
+          <div className="spinner-container">
+            <div className="spinner"></div>
+            <p>Fetching definition...</p>
           </div>
-        ))}
+        ) : (
+          filteredTerms.map((term) => (
+            <div key={term.term} className="card">
+              <h3>{term.term}</h3>
+              <p>{term.definition}</p>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
