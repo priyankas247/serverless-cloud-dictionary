@@ -5,28 +5,45 @@ import './App.css';
 const App = () => {
   const [terms, setTerms] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredTerms, setFilteredTerms] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const apiUrl = 'https://k9cvcqnuzg.execute-api.us-west-2.amazonaws.com/dev'; // Replace with your API Gateway URL
+  const apiUrl = 'https://k9cvcqnuzg.execute-api.us-west-2.amazonaws.com/dev';
 
-  const handleSearch = () => {
-    console.log('Fetching data from API...');
-    
-    // Construct the URL based on searchTerm
-    const url = searchTerm
-      ? `${apiUrl}/get-definition?term=${encodeURIComponent(searchTerm)}`
-      : `${apiUrl}/get-definition`; // Adjust for getting all terms if no searchTerm
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      setError('Please enter a search term');
+      return;
+    }
 
-    axios
-      .get(url)
-      .then(response => {
-        console.log('API Response:', response.data);
-        setTerms(response.data ? [response.data] : []);  // Assuming only one term returned
-        setFilteredTerms(response.data ? [response.data] : []);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+    setLoading(true);
+    setError(null);
+
+    try {
+      const url = `${apiUrl}/get-definition?term=${encodeURIComponent(searchTerm)}`;
+      const response = await axios.get(url);
+      
+      if (response.status === 200) {
+        setTerms([response.data]);
+      } else if (response.status === 404) {
+        setError(response.data.message);
+        setTerms([]);
+      }
+    } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        if (error.response.status === 404) {
+          setError(error.response.data.message);
+        } else {
+          setError('An error occurred while fetching data');
+        }
+      } else {
+        setError('Network error - could not connect to server');
+      }
+      setTerms([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,10 +56,13 @@ const App = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button> {/* Add Search button */}
+        <button onClick={handleSearch} disabled={loading}>
+          {loading ? 'Searching...' : 'Search'}
+        </button>
       </header>
       <div className="dictionary-container">
-        {filteredTerms.map((term) => (
+        {error && <div className="error-message">{error}</div>}
+        {terms.map((term) => (
           <div key={term.term} className="card">
             <h3>{term.term}</h3>
             <p>{term.definition}</p>
