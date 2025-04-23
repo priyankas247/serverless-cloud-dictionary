@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
 import './App.css';
 
 const App = () => {
@@ -12,6 +13,9 @@ const App = () => {
     sort: 'relevance'
   });
   const [categories, setCategories] = useState([]);
+  const [aiExplanation, setAiExplanation] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [activeTerm, setActiveTerm] = useState(null);
 
   const apiUrl = 'https://k9cvcqnuzg.execute-api.us-west-2.amazonaws.com/dev';
 
@@ -36,6 +40,7 @@ const App = () => {
 
     setLoading(true);
     setError(null);
+    setAiExplanation(null);
 
     try {
       const url = `${apiUrl}/get-definition?term=${encodeURIComponent(searchTerm)}`;
@@ -66,6 +71,29 @@ const App = () => {
       setTerms([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGenerateExplanation = async (term) => {
+    setIsGenerating(true);
+    setActiveTerm(term.term);
+    setAiExplanation(null);
+    
+    try {
+      const response = await axios.post(`${apiUrl}/generate-explanation`, {
+        term: term.term,
+        definition: term.definition
+      });
+      
+      setAiExplanation({
+        term: term.term,
+        content: response.data.explanation
+      });
+    } catch (error) {
+      console.error('Error generating explanation:', error);
+      setError('Failed to generate AI explanation');
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -118,6 +146,29 @@ const App = () => {
           <div className="term-example">
             <strong>Example: </strong>
             <em>{term.example}</em>
+          </div>
+        )}
+        
+        <button 
+          className="ai-explain-button"
+          onClick={() => handleGenerateExplanation(term)}
+          disabled={isGenerating && activeTerm === term.term}
+        >
+          {isGenerating && activeTerm === term.term ? (
+            <span className="button-loading">
+              <span className="spinner"></span> Generating...
+            </span>
+          ) : (
+            'Explain with AI'
+          )}
+        </button>
+        
+        {aiExplanation && aiExplanation.term === term.term && (
+          <div className="ai-explanation">
+            <h4>AI-Powered Explanation</h4>
+            <div className="explanation-content">
+              <ReactMarkdown>{aiExplanation.content}</ReactMarkdown>
+            </div>
           </div>
         )}
       </div>
@@ -182,7 +233,7 @@ const App = () => {
               name="category"
               value={filters.category}
               onChange={handleFilterChange}
-              disabled={loading}
+              disabled={loading || isGenerating}
             >
               <option value="all">All Categories</option>
               {categories.map(category => (
@@ -198,7 +249,7 @@ const App = () => {
               name="sort"
               value={filters.sort}
               onChange={handleFilterChange}
-              disabled={loading}
+              disabled={loading || isGenerating}
             >
               <option value="relevance">Relevance</option>
               <option value="a-z">A-Z</option>
