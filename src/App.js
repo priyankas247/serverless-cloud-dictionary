@@ -16,6 +16,7 @@ const App = () => {
   const [aiExplanation, setAiExplanation] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [activeTerm, setActiveTerm] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
 
   const apiUrl = 'https://k9cvcqnuzg.execute-api.us-west-2.amazonaws.com/dev';
 
@@ -27,10 +28,34 @@ const App = () => {
         setCategories(response.data.categories);
       } catch (error) {
         console.error("Couldn't fetch categories", error);
+        setCategories(['AWS', 'Azure', 'GCP', 'General']); // Fallback
       }
     };
     fetchCategories();
   }, []);
+
+  // Fetch term suggestions when search term changes
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (!searchTerm.trim() || searchTerm.trim().length < 3) {
+        setSuggestions([]);
+        return;
+      }
+
+      try {
+        const response = await axios.get(
+          `${apiUrl}/suggest-terms?term=${encodeURIComponent(searchTerm)}`
+        );
+        setSuggestions(response.data.suggestions || []);
+      } catch (error) {
+        console.error("Couldn't fetch suggestions", error);
+        setSuggestions([]);
+      }
+    };
+
+    const debounceTimer = setTimeout(fetchSuggestions, 500);
+    return () => clearTimeout(debounceTimer);
+  }, [searchTerm]);
 
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
@@ -95,6 +120,11 @@ const App = () => {
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchTerm(suggestion);
+    handleSearch(); // Trigger search immediately
   };
 
   const handleFilterChange = (e) => {
@@ -195,6 +225,27 @@ const App = () => {
     </div>
   );
 
+  const TermSuggestions = () => {
+    if (!suggestions.length || loading || isGenerating) return null;
+    
+    return (
+      <div className="term-suggestions">
+        <h4>Related Terms</h4>
+        <div className="suggestions-grid">
+          {suggestions.map((suggestion) => (
+            <button
+              key={suggestion}
+              className="suggestion-chip"
+              onClick={() => handleSuggestionClick(suggestion)}
+            >
+              {suggestion}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   const filteredTerms = applyFilters(terms);
 
   return (
@@ -224,6 +275,8 @@ const App = () => {
             )}
           </button>
         </div>
+        
+        <TermSuggestions />
         
         <div className="filters-container">
           <div className="filter-group">

@@ -494,3 +494,47 @@ body {
   animation: spin 1s ease-in-out infinite;
   margin-right: 8px;
 }
+/* Term Suggestions */
+.term-suggestions {
+  width: 100%;
+  max-width: 600px;
+  margin: 15px auto 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.term-suggestions h4 {
+  margin: 0 0 10px 0;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+.suggestions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.suggestion-chip {
+  padding: 6px 12px;
+  background: #e2e8f0;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.suggestion-chip:hover {
+  background: #cbd5e0;
+  transform: translateY(-2px);
+}
+
+.suggestions-loading {
+  color: #4a5568;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 10px;
+}
