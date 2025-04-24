@@ -70,23 +70,27 @@ body {
 }
 
 .search-button {
-  padding: 0.75rem 1.5rem;
-  background-color: var(--primary-color);
+  background-color: #4f46e5;
   color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  flex: 1;
+}
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .search-button:hover {
-  background-color: var(--secondary-color);
+  background-color: #4338ca;
 }
 
 .search-button:disabled {
-  background-color: var(--medium-gray);
+  background-color: #cccccc;
   cursor: not-allowed;
 }
 
@@ -562,7 +566,25 @@ body {
   cursor: pointer;
   font-size: 0.9rem;
 }
+.clear-button {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  padding: 10px 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  flex: 1;
+}
 
+.clear-button:hover {
+  background-color: #e5e7eb;
+}
+.clear-button:disabled {
+  color: #9ca3af;
+  cursor: not-allowed;
+  background-color: #f3f4f6;
+}
 .try-ai-button:hover {
   background-color: #4338ca;
 }

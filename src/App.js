@@ -8,40 +8,12 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState({
-    category: 'all',
-    sort: 'relevance'
-  });
-  const [categories, setCategories] = useState([]);
   const [aiExplanation, setAiExplanation] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [activeTerm, setActiveTerm] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
 
   const apiUrl = 'https://k9cvcqnuzg.execute-api.us-west-2.amazonaws.com/dev';
-
-  // Fetch available categories on initial load
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/categories`, {
-          timeout: 5000 // Add timeout
-        });
-        
-        if (response.status === 200) {
-          setCategories(response.data.categories);
-        } else {
-          throw new Error(`Unexpected status: ${response.status}`);
-        }
-      } catch (error) {
-        console.error("Couldn't fetch categories", error);
-        // More specific error message
-        setError('Service temporarily unavailable. Please try again later.');
-        setCategories(['AWS', 'Azure', 'GCP', 'General']); // Fallback
-      }
-    };
-    fetchCategories();
-  }, []);
 
   // Fetch term suggestions when search term changes
   useEffect(() => {
@@ -78,7 +50,7 @@ const App = () => {
     setAiExplanation(null);
 
     try {
-      const response = await axios.get(`${apiUrl}/get-definition?term=${encodeURIComponent(searchTerm)}`);
+      const response = await axios.get(`${apiUrl}/get-definition?term=${encodeURIComponent(termToSearch)}`);
       
       if (response.status === 200) {
         const termData = {
@@ -89,7 +61,6 @@ const App = () => {
         };
         setTerms([termData]);
         
-        // Optionally save AI-generated terms to DynamoDB
         if (response.data.source === 'ai') {
           try {
             await axios.post(`${apiUrl}/save-term`, {
@@ -103,7 +74,6 @@ const App = () => {
             });
           } catch (saveError) {
             console.error('Save failed:', saveError.response?.data || saveError.message);
-            // Continue even if save fails - don't block the user
           }
         }
       } else if (response.status === 404) {
@@ -124,6 +94,14 @@ const App = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleClear = () => {
+    setSearchTerm('');
+    setTerms([]);
+    setError(null);
+    setAiExplanation(null);
+    setSuggestions([]);
   };
 
   const handleGenerateExplanation = async (term) => {
@@ -151,42 +129,7 @@ const App = () => {
 
   const handleSuggestionClick = (suggestion) => {
     setSearchTerm(suggestion);
-    handleSearch(suggestion); // Trigger search immediately
-  };
-
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters({
-      ...filters,
-      [name]: value
-    });
-  };
-
-  const applyFilters = (terms) => {
-    let filtered = [...terms];
-    
-    // Apply category filter
-    if (filters.category !== 'all') {
-      filtered = filtered.filter(term => 
-        term.category.toLowerCase() === filters.category.toLowerCase()
-      );
-    }
-    
-    // Apply sorting
-    switch (filters.sort) {
-      case 'a-z':
-        filtered.sort((a, b) => a.term.localeCompare(b.term));
-        break;
-      case 'z-a':
-        filtered.sort((a, b) => b.term.localeCompare(a.term));
-        break;
-      case 'relevance':
-      default:
-        // Default sorting (relevance) - keep original order
-        break;
-    }
-    
-    return filtered;
+    handleSearch(suggestion);
   };
 
   const TermCard = ({ term }) => (
@@ -280,8 +223,6 @@ const App = () => {
     );
   };
 
-  const filteredTerms = applyFilters(terms);
-
   return (
     <div className="App">
       <header className="App-header">
@@ -297,55 +238,31 @@ const App = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
           />
-          <button 
-            className="search-button"
-            onClick={handleSearch} 
-            disabled={loading}
-          >
-            {loading ? (
-              <span className="button-loading">
-                <span className="spinner"></span> Searching...
-              </span>
-            ) : (
-              'Search'
-            )}
-          </button>
+          <div className="button-group">
+            <button 
+              className="search-button"
+              onClick={() => handleSearch()} 
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="button-loading">
+                  <span className="spinner"></span> Searching...
+                </span>
+              ) : (
+                'Search'
+              )}
+            </button>
+            <button
+              className="clear-button"
+              onClick={handleClear}
+              disabled={!searchTerm && terms.length === 0}
+            >
+              Clear
+            </button>
+          </div>
         </div>
         
         <TermSuggestions />
-        
-        <div className="filters-container">
-          <div className="filter-group">
-            <label htmlFor="category-filter">Category:</label>
-            <select
-              id="category-filter"
-              name="category"
-              value={filters.category}
-              onChange={handleFilterChange}
-              disabled={loading || isGenerating}
-            >
-              <option value="all">All Categories</option>
-              {categories.map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
-          </div>
-          
-          <div className="filter-group">
-            <label htmlFor="sort-filter">Sort by:</label>
-            <select
-              id="sort-filter"
-              name="sort"
-              value={filters.sort}
-              onChange={handleFilterChange}
-              disabled={loading || isGenerating}
-            >
-              <option value="relevance">Relevance</option>
-              <option value="a-z">A-Z</option>
-              <option value="z-a">Z-A</option>
-            </select>
-          </div>
-        </div>
       </header>
       
       <main className="dictionary-container">
@@ -355,7 +272,7 @@ const App = () => {
             {error.includes('not found') && (
               <button 
                 className="try-ai-button"
-                onClick={handleSearch}
+                onClick={() => handleSearch()}
               >
                 Try AI Generation
               </button>
@@ -371,9 +288,9 @@ const App = () => {
           </div>
         ) : (
           <>
-            {filteredTerms.length > 0 ? (
+            {terms.length > 0 ? (
               <div className="terms-list">
-                {filteredTerms.map((term) => (
+                {terms.map((term) => (
                   <TermCard key={term.term} term={term} />
                 ))}
               </div>

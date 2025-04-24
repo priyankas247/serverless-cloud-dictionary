@@ -161,7 +161,6 @@
       }
     },
 
-    // Add 30 more items here...
 
     {
       "PutRequest": {
@@ -204,6 +203,5 @@
       }
     }
 
-    // Continue adding until you reach 50 records
   ]
 }
