@@ -178,7 +178,7 @@ body {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: white;
+  color: black;
   flex-shrink: 0;
 }
 
@@ -196,6 +196,10 @@ body {
 
 .category-tag.general {
   background-color: var(--general-gray);
+}
+.category-tag.ai {
+  border: 1px dashed #4f46e5;
+  background-color: #f0efff;
 }
 
 .term-body {
@@ -537,4 +541,45 @@ body {
   font-size: 0.9rem;
   text-align: center;
   padding: 10px;
+}
+/* Model info styling */
+.model-info {
+  font-size: 0.75rem;
+  color: #666;
+  text-align: right;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* Try AI button for not found errors */
+.try-ai-button {
+  margin-left: 10px;
+  padding: 4px 8px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.try-ai-button:hover {
+  background-color: #4338ca;
+}
+
+/* App subtitle */
+.app-subtitle {
+  margin-top: -10px;
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Footer styling */
+.app-footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  color: #666;
+  font-size: 0.8rem;
+  border-top: 1px solid #eee;
 }
