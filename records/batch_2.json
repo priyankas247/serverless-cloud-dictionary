@@ -1,0 +1,304 @@
+{
+  "CloudDictionary": [
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Application Gateway"
+          },
+          "definition": {
+            "S": "Application delivery controller as a service."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Bastion"
+          },
+          "definition": {
+            "S": "Provides secure RDP and SSH access to VMs without exposing them to the internet."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Arc"
+          },
+          "definition": {
+            "S": "Extends Azure management to any infrastructure."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Migrate"
+          },
+          "definition": {
+            "S": "Central hub for tools to start, execute, and track migration to Azure."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Cognitive Services"
+          },
+          "definition": {
+            "S": "APIs for AI capabilities like vision, speech, language, and decision-making."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Machine Learning"
+          },
+          "definition": {
+            "S": "Cloud-based environment to build, train, and deploy machine learning models."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Bot Services"
+          },
+          "definition": {
+            "S": "Platform for building intelligent, serverless bot applications."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Container Instances"
+          },
+          "definition": {
+            "S": "Easily run containers on Azure without managing servers."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Container Registry"
+          },
+          "definition": {
+            "S": "Store and manage private Docker container images."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Media Services"
+          },
+          "definition": {
+            "S": "Cloud-based platform for video indexing, processing, and streaming."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Automation"
+          },
+          "definition": {
+            "S": "Automate frequent, time-consuming, and error-prone cloud management tasks."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Policy"
+          },
+          "definition": {
+            "S": "Enforce organizational standards and assess compliance at-scale."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Blueprints"
+          },
+          "definition": {
+            "S": "Define repeatable Azure environments."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Resource Manager"
+          },
+          "definition": {
+            "S": "Deployment and management service for Azure resources."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Resource Graph"
+          },
+          "definition": {
+            "S": "Explore and analyze your Azure resources at scale."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Cost Management"
+          },
+          "definition": {
+            "S": "Track and control Azure spending and resource use."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Advisor"
+          },
+          "definition": {
+            "S": "Personalized cloud consultant that helps you follow best practices."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Marketplace"
+          },
+          "definition": {
+            "S": "Catalog of IT software and services built by partners."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Lighthouse"
+          },
+          "definition": {
+            "S": "Cross-tenant management for service providers."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Service Bus"
+          },
+          "definition": {
+            "S": "Messaging service between applications and services."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Event Grid"
+          },
+          "definition": {
+            "S": "Fully managed event routing service."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Notification Hubs"
+          },
+          "definition": {
+            "S": "Push notifications to any platform from any backend."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure Time Series Insights"
+          },
+          "definition": {
+            "S": "Managed analytics service for IoT and time-series data."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Azure IoT Hub"
+          },
+          "definition": {
+            "S": "Central message hub for bi-directional communication between IoT applications and devices."
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": {
+            "S": "Google Cloud Storage"
+          },
+          "definition": {
+            "S": "Object storage service for storing and accessing data on Google's infrastructure."
+          }
+        }
+      }
+    }
+  ]
+}

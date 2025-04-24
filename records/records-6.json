@@ -1,0 +1,209 @@
+{
+  "CloudDictionary": [
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Google Cloud Storage" },
+          "definition": { "S": "Object storage service for storing and accessing data on Google's infrastructure." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "BigQuery" },
+          "definition": { "S": "A fully managed enterprise data warehouse for analytics at scale." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Compute Engine" },
+          "definition": { "S": "Google Cloud’s infrastructure-as-a-service (IaaS) offering for running virtual machines." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Functions" },
+          "definition": { "S": "A serverless execution environment for building and connecting cloud services." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Run" },
+          "definition": { "S": "A managed compute platform that automatically scales your stateless containers." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "App Engine" },
+          "definition": { "S": "A platform for developing and hosting web applications in Google-managed data centers." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Pub/Sub" },
+          "definition": { "S": "A messaging service for exchanging event data among applications and services." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud SQL" },
+          "definition": { "S": "Managed database service that supports MySQL, PostgreSQL, and SQL Server." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Spanner" },
+          "definition": { "S": "A fully managed, scalable, and globally distributed relational database." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Firestore" },
+          "definition": { "S": "A flexible, scalable NoSQL cloud database to store and sync data in real time." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Datastore" },
+          "definition": { "S": "A scalable, fully managed NoSQL document database for web and mobile applications." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Logging" },
+          "definition": { "S": "Real-time log management and analysis service powered by Google." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Monitoring" },
+          "definition": { "S": "Provides visibility into the performance, uptime, and overall health of cloud applications." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Vertex AI" },
+          "definition": { "S": "Unified platform for building, deploying, and scaling AI models." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "AI Platform" },
+          "definition": { "S": "A suite of services for training, evaluating, and deploying machine learning models." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Vision API" },
+          "definition": { "S": "Derive insight from images with powerful pre-trained machine learning models." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Natural Language API" },
+          "definition": { "S": "Easily reveal the structure and meaning of text with natural language processing." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Translation API" },
+          "definition": { "S": "Dynamically translate between thousands of available language pairs." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Dataflow" },
+          "definition": { "S": "Stream and batch data processing service using Apache Beam." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Dataproc" },
+          "definition": { "S": "Managed Spark and Hadoop service that is fast, easy to use, and low cost." }
+        }
+      }
+    },
+
+    // Add 30 more items here...
+
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Interconnect" },
+          "definition": { "S": "Offers low latency and highly available network connectivity between on-prem and GCP." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "VPC" },
+          "definition": { "S": "Virtual Private Cloud (VPC) provides a private network with IP allocation, routing, and firewall policies." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Load Balancing" },
+          "definition": { "S": "Distribute traffic across multiple backend instances and regions." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud Armor" },
+          "definition": { "S": "Provides DDoS attack mitigation and WAF capabilities for applications." }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "term": { "S": "Cloud CDN" },
+          "definition": { "S": "Delivers content to users with low latency and high transfer speeds." }
+        }
+      }
+    }
+
+    // Continue adding until you reach 50 records
+  ]
+}
