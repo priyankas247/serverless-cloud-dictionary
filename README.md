@@ -1,6 +1,10 @@
 ⚡ Serverless Cloud Dictionary
+
+
 A sleek, full-stack serverless app to search, explore, and generate AI-powered explanations for cloud computing terms.
+
 🌟 Features
+
 🔍 Smart Search – Autocomplete suggestions as you type
 
 📚 Curated Definitions – Clear explanations with real-world examples
@@ -10,6 +14,7 @@ A sleek, full-stack serverless app to search, explore, and generate AI-powered e
 💾 Fully Serverless – DynamoDB powers backend storage
 
 🛠️ Architecture Overview
+
 Built entirely with AWS-native technologies:
 
 Frontend – React, deployed via AWS Amplify
@@ -30,9 +35,14 @@ This app uses Claude 3 for AI generation, which incurs costs per use. To keep th
 🎥 Watch the walkthrough video → https://tinyurl.com/233jyoyc
 
 🧪 Run It Locally
+
 Clone the repo and get started in seconds:
+
 git clone https://github.com/priyankas247/serverless-cloud-dictionary
+
 cd serverless-cloud-dictionary
+
 npm install
+
 npm start
 
