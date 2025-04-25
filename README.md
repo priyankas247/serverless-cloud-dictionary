@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+⚡ Serverless Cloud Dictionary
+A sleek, full-stack serverless app to search, explore, and generate AI-powered explanations for cloud computing terms.
+🌟 Features
+🔍 Smart Search – Autocomplete suggestions as you type
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+📚 Curated Definitions – Clear explanations with real-world examples
 
-## Available Scripts
+🤖 AI Magic – Claude 3 (via Amazon Bedrock) generates human-like explanations
 
-In the project directory, you can run:
+💾 Fully Serverless – DynamoDB powers backend storage
 
-### `npm start`
+🛠️ Architecture Overview
+Built entirely with AWS-native technologies:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Frontend – React, deployed via AWS Amplify
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+API Layer – REST endpoints using API Gateway + Lambda
 
-### `npm test`
+AI Integration – Claude 3 Sonnet through Amazon Bedrock
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Data Storage – DynamoDB, with optional writes for AI-generated content
 
-### `npm run build`
+🖼️ Architecture Diagram
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Blank diagram](https://github.com/user-attachments/assets/731f909c-ea8d-4762-976e-e915d7285862)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+🚫 Why There's No Live Demo
+This app uses Claude 3 for AI generation, which incurs costs per use. To keep things lean:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+🎥 Watch the walkthrough video → https://tinyurl.com/233jyoyc
 
-### `npm run eject`
+🧪 Run It Locally
+Clone the repo and get started in seconds:
+git clone https://github.com/priyankas247/serverless-cloud-dictionary
+cd serverless-cloud-dictionary
+npm install
+npm start
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
